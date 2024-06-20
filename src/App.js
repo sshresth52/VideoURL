@@ -34,19 +34,13 @@ const App = () => {
         events: {
           onStateChange: (event) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
-              const checkTime = setInterval(() => {
-                console.log(playerRef.current);
                 const currentTime = playerRef.current.playerInfo.currentTime;
-                console.log(captions," captions ");
-                console.log(currentTime);
                 const activeCaption = captions.find(
                   (caption) =>
                     currentTime >= parseTime(caption.startTime) &&
                     currentTime < parseTime(caption.endTime)
               );
                 setCurrentCaption(activeCaption ? activeCaption.text : "");
-              }, 1000);
-              return () => clearInterval(checkTime);
             }
           },
         },

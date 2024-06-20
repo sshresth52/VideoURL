@@ -11,10 +11,11 @@ const VideoPlayer = ({ onVideoUrlChange }) => {
         width: "640",
         events: {
           onStateChange: onPlayerStateChange,
+          onError: onPlayerError,
         },
       });
     };
-
+  
     // Cleanup function to prevent memory leaks
     return () => {
       if (playerRef.current) {
@@ -22,7 +23,12 @@ const VideoPlayer = ({ onVideoUrlChange }) => {
       }
     };
   }, []);
-
+ 
+  const onPlayerError = (event) => {
+    console.error("YouTube Player Error:", event.data);
+    alert("Failed to load the video. Please check the URL and try again.");
+  };
+  
   const onPlayerStateChange = (event) => {
     // Handle different states of the player
     if (event.data === window.YT.PlayerState.PLAYING) {
@@ -47,13 +53,14 @@ const VideoPlayer = ({ onVideoUrlChange }) => {
   };
 
   return (
-    <div>
+    <div style={{ margin: "20px auto", maxWidth: "960px" }}>
       <input
         type="text"
         placeholder="Enter YouTube video URL"
         onChange={handleVideoUrlChange}
+        style={{ width: "100%" }}
       />
-      <div id="player"></div>
+      <div id="player" style={{ marginTop: "20px" }}></div>
     </div>
   );
 };

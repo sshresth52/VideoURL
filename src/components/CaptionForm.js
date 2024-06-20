@@ -7,6 +7,10 @@ const CaptionForm = ({ onAddCaption }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!startTime || !endTime || !text) {
+      alert("Please fill in all fields correctly.");
+      return;
+    }
     onAddCaption({ startTime, endTime, text });
     setStartTime("");
     setEndTime("");
